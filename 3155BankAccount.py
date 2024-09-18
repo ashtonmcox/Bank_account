@@ -31,7 +31,10 @@ class Savings_account(Bank):
         self.__interest_rate = interest_rate
 
 class Checking_account(Bank):
-    pass
+    def __init__(self, customer_name, current_balance, minimum_balance, account_number, routing_number, transfer_limit):
+        super().__init__(customer_name, current_balance, minimum_balance, routing_number)
+        self.__account_number = account_number
+        self.__transfer_limit = transfer_limit
 
 
 p1 = Bank("John", 100, 90)
