@@ -13,11 +13,18 @@ class Bank:
         print("success")
 
     def withdraw(self, amount):
-        if((self.current_balance - amount) >= self.minimum_balance):
-            self.current_balance -= amount
-            print("success")
+        if (self.current_balance - amount) >= self.minimum_balance:
+            if isinstance(self, Checking_account):
+                if amount > self.transfer_limit:
+                    print("Transfer limit exceeded. Unable to complete.")
+                else:
+                    self.current_balance -= amount
+                    print("Withdrawal successful")
+            else:
+                self.current_balance -= amount
+                print("Withdrawal successful")
         else:
-            print("insufficient funds")
+            print("Insufficient funds")
 
     def print_customer_information(self):
         print("Customer name: ", self.customer_name)
@@ -28,21 +35,13 @@ class Savings_account(Bank):
     def __init__(self, customer_name, current_balance, minimum_balance, account_number, routing_number, interest_rate):
         super().__init__(customer_name, current_balance, minimum_balance, routing_number)
         self.__account_number = account_number
-        self.__interest_rate = interest_rate
+        self.interest_rate = interest_rate
 
 class Checking_account(Bank):
     def __init__(self, customer_name, current_balance, minimum_balance, account_number, routing_number, transfer_limit):
         super().__init__(customer_name, current_balance, minimum_balance, routing_number)
         self.__account_number = account_number
-        self.__transfer_limit = transfer_limit
+        self.transfer_limit = transfer_limit
 
-
-p1 = Bank("John", 100, 90)
-p1.deposit(100)
-p1.withdraw(100)
-p1.print_customer_information()
-p2 = Bank("Sally", 100, 90)
-p2.withdraw(20)
-p2.print_customer_information()
 
 
